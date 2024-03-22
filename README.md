@@ -46,6 +46,9 @@
 - [ ] Projects
 - [ ] Notes
 - [ ] Timesheets
+- [ ] Toast notifications
+- [ ] Realtime updates
+- [ ] App updates with git hash versioning
 
 ---
 
