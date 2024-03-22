@@ -48,6 +48,7 @@
 - [ ] Timesheets
 - [ ] Toast notifications
 - [ ] Realtime updates
+- [ ] Websockets?
 - [ ] App updates with git hash versioning
 
 ---
