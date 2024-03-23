@@ -1,110 +1,58 @@
-# Schedule
+# Turborepo Tailwind CSS starter
 
-### Backend
+This is an official starter Turborepo.
 
-- [ ] pnpm workspace
-- [ ] monorepo (Turborepo or Nx?)
-- [ ] Nestjs
-- [ ] logging with Pino
-- [ ] Swagger for API documentation
-- [ ] testing with Jest
-- [ ] Fastify
-- [ ] GraphQL
-- [ ] API versioning
-- [ ] Drizzle
-- [ ] Supabase (database, auth, storage)
-- [ ] KeyDB/Dragonfly cache (Redis alternative)
-- [ ] rate limiting with KeyDB/Dragonfly
-- [ ] Memphis.dev (queue alternative to Kafka/Bullmq/RabbitMQ, ...)
-- [ ] ElectricSQL as localfirst sync integraded with Supabase
+## Using this example
 
----
+Run the following command:
 
-### Frontend
-
-- [ ] Next.js
-- [ ] TailwindCSS
-- [ ] Shadcn
-- [ ] Auth JWT with action token and refresh token
-
----
-
-### Base, repo, automation
-
-- [ ] CI/CD (Github Actions)
-- [ ] linting, etc... and Biome
-- [ ] Storybook
-- [ ] Dockerize
-
----
-
-### Models / CRUD
-
-- [ ] Users
-- [ ] Workspaces
-- [ ] Tasks
-- [ ] Projects
-- [ ] Notes
-- [ ] Timesheets
-- [ ] Toast notifications
-- [ ] Realtime updates
-- [ ] Websockets?
-- [ ] App updates with git hash versioning
-
----
-
-### Schema
-
-```mermaid
-graph TD;
-  subgraph "Frontend"
-    A[Next.js Frontend] --> B[Login Page]
-    A --> C[Signup Page]
-    A --> D[Dashboard]
-    style B,C,D fill:#0b6b00,stroke:#0b6b00,stroke-width:4px
-  end
-  subgraph "Backend"
-    E[NestJS with Fastify API Backend] --> F[Authentication & Authorization]
-    E --> G[CRUD Operations for Tasks]
-    F --> H[JWT Tokens]
-    G --> I[Supabase Database]
-    style F,H,G fill:#85007c,stroke:#85007c,stroke-width:4px
-  end
-  subgraph "Database"
-    I[Supabase Database] --> J[Users Table]
-    I --> K[Tasks Table]
-    style J,K fill:#00328f,stroke:#00328f,stroke-width:4px
-  end
-  subgraph "Auth with JWT Refresh Tokens"
-    F --> L[Token Generation & Refresh]
-    style L fill:#f00,stroke:#f00,stroke-width:4px
-  end
-  subgraph "Security Considerations"
-    B --> M[Secure Storage]
-    E --> N[Input Validation & Sanitization]
-    N --> O[HTTPS Communication]
-    style M,N,O fill:#bd6202,stroke:#bd6202,stroke-width:4px
-  end
-
+```sh
+npx create-turbo@latest -e with-tailwind
 ```
 
----
+## What's inside?
 
-### Links & information
+This Turborepo includes the following packages/apps:
 
-- [Rokas Dam](https://github.com/devRokas)
-- [Rokas Dam nestjs starter - Nestjs + Supabase (no fastify, no drizzle, no auth)](https://github.com/devRokas/supabase-nestjs-rest-api-starter-kit)
-- [Sakura Dev - video 1: Nestjs with Prisma and Nextauth](https://www.youtube.com/watch?v=khNwrFJ-Xqs)
-- [Sakura Dev - Video 2: refactoring Nestjs with Drizzle](https://www.youtube.com/watch?v=l1DGXmmgZ9w)
-- [NestJS](https://nestjs.com/)
-- [Fastify](https://www.fastify.io/)
-- [Pino](https://getpino.io/)
-- [Memphis.dev](https://memphis.dev/)
-- [KeyDB](https://keydb.dev/)
-- [Dragonfly](https://dragonflydb.com/)
-- [Supabase](https://supabase.io/)
-- [ElectricSQL](https://electricsql.com/)
-- [ElectricSQL integration Supabase](https://supabase.com/partners/integrations/electricsql)
-- [Shadcn](https://shadcn.com/)
-- [Drizzleorm](https://drizzleorm.com/)
-- [pnpm](https://pnpm.io/)
+### Apps and Packages
+
+- `docs`: a [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
+- `web`: another [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
+- `ui`: a stub React component library with [Tailwind CSS](https://tailwindcss.com/) shared by both `web` and `docs` applications
+- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+
+### Building packages/ui
+
+This example is set up to produce compiled styles for `ui` components into the `dist` directory. The component `.tsx` files are consumed by the Next.js apps directly using `transpilePackages` in `next.config.js`. This was chosen for several reasons:
+
+- Make sharing one `tailwind.config.js` to apps and packages as easy as possible.
+- Make package compilation simple by only depending on the Next.js Compiler and `tailwindcss`.
+- Ensure Tailwind classes do not overwrite each other. The `ui` package uses a `ui-` prefix for it's classes.
+- Maintain clear package export boundaries.
+
+Another option is to consume `packages/ui` directly from source without building. If using this option, you will need to update the `tailwind.config.js` in your apps to be aware of your package locations, so it can find all usages of the `tailwindcss` class names for CSS compilation.
+
+For example, in [tailwind.config.js](packages/tailwind-config/tailwind.config.js):
+
+```js
+  content: [
+    // app content
+    `src/**/*.{js,ts,jsx,tsx}`,
+    // include packages if not transpiling
+    "../../packages/ui/*.{js,ts,jsx,tsx}",
+  ],
+```
+
+If you choose this strategy, you can remove the `tailwindcss` and `autoprefixer` dependencies from the `ui` package.
+
+### Utilities
+
+This Turborepo has some additional tools already setup for you:
+
+- [Tailwind CSS](https://tailwindcss.com/) for styles
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
