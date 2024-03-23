@@ -34,6 +34,10 @@
 - [ ] CI/CD (Github Actions)
 - [ ] linting, etc... and Biome
 - [ ] Storybook
+- [ ] Husky
+- [ ] Posthog for analytics
+- [ ] Sentry for error tracking?
+- [ ] OpenTelemetry for tracing
 - [ ] Dockerize
 
 ---
